@@ -1,68 +1,159 @@
 <template>
   <div>
-    <Navbar></Navbar>
-    <b-img center :src="this.logoImg" alt="Logo image" id="logo"></b-img>
+    <Navbar/>
     <div class="container">
-      <div class="row">
-        <div class="col-1 col-sm-2 col-md-4"></div>
-        <div class="col-10 col-sm-8 col-md-4">
-          <b-button @click="click()" variant="danger" style="width: 100%">
-            已按下 {{ count }} 次
-          </b-button>
+      <div class="row" id="BannerBar">
+        <b-carousel
+            class="col-7"
+            id="MainBanner"
+            :interval="4000"
+            controls
+            indicators>
+          <a v-for="(banner,i) in main_banner" :key="i" :href="banner.url">
+            <b-carousel-slide :img-src="banner.img"></b-carousel-slide>
+          </a>
+        </b-carousel>
+        <div class="col-5" id="SubBanners">
+          <div class="row" id="SearchBar" ref="SearchBar">
+            <b-input type="text" class="col-10" id="SearchInput" placeholder="搜索" v-bind="message"/>
+            <b-icon-search class="col-2" id="SearchButton" @click="this.$router.push(message)"></b-icon-search>
+          </div>
+          <div class="row">
+            <b-img
+                class="col-4 advertise"
+                :src="advertise1.img"
+                alt=""
+                @click="this.$router.push(advertise1.url)"/>
+            <b-carousel
+                class="col-8 sub_banner"
+                :interval="4000"
+                controls>
+              <a v-for="(banner,i) in sub_banners1" :key="i" :href="banner.url">
+                <b-carousel-slide :img-src="banner.img"></b-carousel-slide>
+              </a>
+            </b-carousel>
+          </div>
+          <div
+              class="row"
+              id="SubBannerII"
+              ref="SubBannerII">
+            <b-carousel
+                class="col-8 sub_banner"
+                :interval="4000"
+                controls>
+              <a v-for="(banner,i) in sub_banners2" :key="i" :href="banner.url">
+                <b-carousel-slide :img-src="banner.img"></b-carousel-slide>
+              </a>
+            </b-carousel>
+            <b-img
+                class="col-4 advertise"
+                :src="advertise2.img"
+                alt=""
+                @click="this.$router.push(advertise2.url)"/>
+          </div>
         </div>
       </div>
+      <SuggestBar/>
     </div>
   </div>
 </template>
 
 <script>
-import common from "../common";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/Navbar";
+import SuggestBar from "@/components/SuggestBar";
 
 export default {
-  name: "Home",
-  data() {
-    return {
-      count: 0,
-      logoImg: common.kLogoDark,
-    };
-  },
+  name: "Home1",
   components: {
     Navbar,
+    SuggestBar
   },
-  // 在页面载入时更新点击次数数据
+  data() {
+    return {
+      main_banner: [
+        {url: "about", img: "https://dummyimage.com/1280x16:10/"},
+        {url: "about", img: "https://dummyimage.com/1280x16:10/"}
+      ],
+      sub_banners1: [
+        {url: "xxx", img: "https://dummyimage.com/640x2:1"},
+        {url: "xxx", img: "https://dummyimage.com/640x2:1"}
+      ],
+      sub_banners2: [
+        {url: "xxx", img: "https://dummyimage.com/640x2:1"},
+        {url: "xxx", img: "https://dummyimage.com/640x2:1"}
+      ],
+      advertise1: {img: "https://dummyimage.com/256x1:1/", url: "xxx"},
+      advertise2: {img: "https://dummyimage.com/256x1:1/", url: "xxx"},
+      message: "",
+    }
+  },
   mounted() {
-    this.axios
-      .post(common.kApiService.getCount, {})
-      .then((res) => {
-        this.count = res.data.count;
-      })
-      .catch((err) => console.log(err));
-  },
-  methods: {
-    // 点击时，先报告点击事件，再请求新的点击次数
-    click() {
-      this.axios
-        .post(common.kApiService.addCount, {})
-        .then(() => {
-          this.axios
-            .post(common.kApiService.getCount, {})
-            .then((res) => {
-              this.count = res.data.count;
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
-    },
-  },
+    setInterval(() => {
+      const m = document.getElementById("MainBanner");
+      const s = this.$refs.SearchBar;
+      const a = this.$refs.SubBannerII;
+      const h = (a.offsetTop + a.clientHeight - s.offsetTop);
+      m.style.height = h + "px";
+    }, 200);
+  }
 };
 </script>
 
 <style scoped>
 
-#logo {
-  margin-top: 2vh;
-  max-height: 300px;
+* {
+  user-select: none;
 }
 
+#BannerBar {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#MainBanner {
+  padding: 0;
+  overflow: hidden;
+}
+
+#SubBanners {
+  border-left: white solid 1px;
+}
+
+#SearchBar {
+  border: #666666 1px solid;
+  height: 40px;
+  border-radius: 100px;
+  margin: 0 3px 10px 1px;
+  overflow: hidden;
+}
+
+#SearchInput {
+  height: 40px;
+  border: none;
+  outline: none;
+  padding-left: 30px;
+}
+
+#SearchInput:focus {
+  box-shadow: none;
+}
+
+#SearchButton {
+  height: 25px;
+  margin-top: 7px;
+}
+
+.advertise {
+  padding: 0;
+  border-left: white solid 1px;
+}
+
+.sub_banner {
+  padding: 0;
+  border-left: white solid 1px;
+}
+
+#SubBannerII {
+  border-top: white solid 1px;
+}
 </style>

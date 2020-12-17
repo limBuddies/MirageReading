@@ -1,14 +1,11 @@
-import Home from "@/pages/Home";
-import About from "@/pages/About";
 import NotFound from "@/pages/NotFound";
-import Title from "@/pages/Title";
-import Home1 from "@/pages/Home1";
+import Home1 from "@/pages/Home";
+import Book from "@/pages/Book";
+
 // 应用路由表
 export default [
-    {path: '/', component: Home, meta: {title: '主页'}},
-    {path: '/about', component: About, meta: {title: '关于'}},
+    {path: '/', component: Home1, meta: {title: '主页'}},
+    {path: '/book', component: Book, meta: {title: '书籍'}},
     // 处理404情况
-    {path: '/title', component: Title, meta: {title: '文章标题'}},
-    {path:'/home1',component: Home1, meta: {title: '阅读主页'}},
     {path: '*', component: NotFound, meta: {title: '404'}},
 ]
