@@ -1,35 +1,35 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <div class="container" id="Page" ref="Page">
-      <div class="row" id="BookBar">
+    <b-container id="Page" ref="Page">
+      <b-row id="BookBar">
         <b-img class="col-md-4 col-lg-3 d-none d-md-block" id="Cover" ref="Cover" fluid :src="cover" alt="cover"/>
         <div class="col-md-8 col-lg-9" id="Info" ref="Info">
           <h2 class="row" id="Title">{{ bookName }}</h2>
-          <div class="row">
+          <b-row>
             <div class="col-sm-12 col-md-4" id="Detail">
               <h4 class="row" id="SubTitle">{{ subTitle }}</h4>
-              <div class="row" id="Rating">
+              <b-row id="Rating">
                 <div v-for="(v,i) in ratingList" :key="i">
                   <b-icon-star-fill v-if="v===1"/>
                   <b-icon-star-half v-if="v===0.5"/>
                   <b-icon-star v-if="v===0"/>
                 </div>
-              </div>
+              </b-row>
               <b-img id="Borrow" src="https://dummyimage.com/210x7:2"/>
               <small class="row" id="Buy" ref="Buy">或以 {{ price }} 购买</small>
             </div>
             <div class="col-1"/>
             <div class="col-md-7 d-none d-lg-block" id="Intro">
               <strong class="row" id="IntroTitle">内容简介</strong>
-              <div class="row" id="IntroContent" v-html="introduction"></div>
+              <b-row id="IntroContent" v-html="introduction"></b-row>
             </div>
-          </div>
+          </b-row>
         </div>
-      </div>
+      </b-row>
       <hr>
       <SuggestBar/>
-    </div>
+    </b-container>
   </div>
 </template>
 
@@ -38,7 +38,7 @@ import Navbar from "../components/Navbar";
 import SuggestBar from "@/components/SuggestBar";
 
 export default {
-  name: "Book",
+  name: "Detail",
   data() {
     return {
       bookName: "阿甘正传",
@@ -70,8 +70,8 @@ export default {
     Navbar,
     SuggestBar
   },
-  mounted() {
-    setInterval(() => {
+  methods: {
+    fixLayout() {
       const i = this.$refs.Info;
       const c = this.$refs.Cover;
       const b = this.$refs.Buy;
@@ -79,7 +79,11 @@ export default {
         const m = c.offsetTop + c.clientHeight - (b.offsetTop + b.clientHeight);
         i.style.top = m - 110 + "px";
       } else i.style.top = "0px";
-    }, 200)
+      requestAnimationFrame(this.fixLayout);
+    }
+  },
+  mounted() {
+    this.fixLayout();
   }
 };
 

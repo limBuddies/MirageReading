@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Navbar/>
-    <div class="container">
-      <div class="row" id="BannerBar">
+    <Navbar></Navbar>
+    <b-container>
+      <b-row id="BannerBar">
         <b-carousel
             class="col-7"
             id="MainBanner"
@@ -14,11 +14,11 @@
           </a>
         </b-carousel>
         <div class="col-5" id="SubBanners">
-          <div class="row" id="SearchBar" ref="SearchBar">
+          <b-row id="SearchBar" ref="SearchBar">
             <b-input type="text" class="col-10" id="SearchInput" placeholder="搜索" v-bind="message"/>
             <b-icon-search class="col-2" id="SearchButton" @click="this.$router.push(message)"></b-icon-search>
-          </div>
-          <div class="row">
+          </b-row>
+          <b-row>
             <b-img
                 class="col-4 advertise"
                 :src="advertise1.img"
@@ -32,9 +32,8 @@
                 <b-carousel-slide :img-src="banner.img"></b-carousel-slide>
               </a>
             </b-carousel>
-          </div>
-          <div
-              class="row"
+          </b-row>
+          <b-row
               id="SubBannerII"
               ref="SubBannerII">
             <b-carousel
@@ -50,11 +49,11 @@
                 :src="advertise2.img"
                 alt=""
                 @click="this.$router.push(advertise2.url)"/>
-          </div>
+          </b-row>
         </div>
-      </div>
+      </b-row>
       <SuggestBar/>
-    </div>
+    </b-container>
   </div>
 </template>
 
@@ -63,7 +62,7 @@ import Navbar from "@/components/Navbar";
 import SuggestBar from "@/components/SuggestBar";
 
 export default {
-  name: "Home1",
+  name: "Home",
   components: {
     Navbar,
     SuggestBar
@@ -87,14 +86,18 @@ export default {
       message: "",
     }
   },
-  mounted() {
-    setInterval(() => {
+  methods: {
+    fixLayout() {
       const m = document.getElementById("MainBanner");
       const s = this.$refs.SearchBar;
       const a = this.$refs.SubBannerII;
       const h = (a.offsetTop + a.clientHeight - s.offsetTop);
       m.style.height = h + "px";
-    }, 200);
+      requestAnimationFrame(this.fixLayout);
+    }
+  },
+  mounted() {
+    this.fixLayout();
   }
 };
 </script>
@@ -120,7 +123,7 @@ export default {
 }
 
 #SearchBar {
-  border: #666666 1px solid;
+  border: #aaaaaa 1px solid;
   height: 40px;
   border-radius: 100px;
   margin: 0 3px 10px 1px;

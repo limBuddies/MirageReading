@@ -86,6 +86,11 @@ export default {
 </script>
 
 <style scoped>
+
+* {
+  user-select: none;
+}
+
 #BookSuggest {
   padding: 0 30px 0 0;
 }
@@ -95,10 +100,13 @@ export default {
 }
 
 .suggest_title {
+  width: 200px;
   border-left: black solid 1px;
+  border-bottom: #e5e5e5 solid 1px;
   margin-left: 0;
   margin-bottom: 20px;
   margin-top: 10px;
+  padding-bottom: 5px;
   padding-left: 6px;
 }
 
