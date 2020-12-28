@@ -7,6 +7,7 @@ import Profile from "@/pages/Profile";
 import Signup from "@/pages/Signup";
 import Login from "@/pages/Login";
 import Read from "@/pages/Read";
+import Tweets from "@/pages/Tweets";
 
 // 应用路由表
 export default [
@@ -18,6 +19,7 @@ export default [
     {path: '/signup', component: Signup, meta: {title: '注册'}},
     {path: '/login', component: Login, meta: {title: '登录'}},
     {path: '/read', component: Read, meta: {title: '阅读'}},
+    {path: '/tweets', component: Tweets, meta: {title: '动弹'}},
     // 处理404情况
     {path: '*', component: NotFound, meta: {title: '404'}},
 ]
