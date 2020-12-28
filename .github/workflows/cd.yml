@@ -2,7 +2,7 @@ name: Continues deploy
 on: push
 
 jobs:
-  build_image:
+  continues_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,10 +13,11 @@ jobs:
           npm install
           npm run build
           mv dist/* ../server/public
+          tar -cvf ../deploy.tar ../server
       - name: Copy to server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: server
+          local: deploy.tar
           remote: /home/huang825172/MirageReading
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
