@@ -8,7 +8,7 @@ jobs:
       - name: Deploy on server
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: cd /home/huang825172 && rm -rf MirageReading && git clone https://${{ secrets.GITUSR }}:${{ secrets.GITPWD }}@github.com/limBuddies/MirageReading.git && cd MirageReading/web && npm install && npm run build && mv dist/* ../server/public/ && cd ../server && npm install && npm run start
+          command: cd /home/huang825172 && rm -rf MirageReading && git clone https://${{ secrets.GITUSR }}:${{ secrets.GITPWD }}@github.com/limBuddies/MirageReading.git && cd MirageReading/web && npm install && npm run build && mv dist/* ../server/public/ && cd ../server && export MIRAGE_DB_CONNECT=mysql://mirage:yXDA0PM1BS@119.29.60.125:3306/mirage && npm install && npm run start
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           privateKey: ${{ secrets.PEM }}
