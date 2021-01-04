@@ -7,7 +7,7 @@
         </div>
         <div class="row">
           <div v-for="(book,i) in suggest.books" :key="i" class="col-2">
-            <img :src="book.img" alt="" class="book_img" @click="this.$router.push(book.url)">
+            <img :src="book.img" alt="" class="book_img" @click="$router.push(book.url)">
           </div>
         </div>
         <div class="row sm_link">
@@ -18,7 +18,7 @@
 
     <div class="col-md-3 d-none d-lg-block" id="CollectionSuggest">
       <p class="suggest_title">词库推荐</p>
-      <div class="collection row" v-for="(list,i) in lists" :key="i" @click="this.$router.push(list.url)">
+      <div class="collection row" v-for="(list,i) in lists" :key="i" @click="$router.push(list.url)">
         <div class="card">
           <div class="collection_title">
             {{ list.name }}
@@ -42,43 +42,38 @@ export default {
     return {
       suggests: [
         {
-          name: "每日推荐", more: "xxx", books: [
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"}
+          name: "每日推荐", more: "", books: [
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
           ],
         },
         {
-          name: "近期飙升榜", more: "xxx", books: [
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"}
+          name: "近期飙升榜", more: "", books: [
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
           ],
         },
         {
-          name: "经典文学", more: "xxx", books: [
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"},
-            {url: "xxx", img: "https://dummyimage.com/160x5:7"}
+          name: "经典文学", more: "", books: [
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
+            {url: "detail", img: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"},
           ],
         }
       ],
       lists: [
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
-        {name: "词汇表", words: 2000, times: 1500, url: "xxx"},
+        {name: "词汇表", words: 2000, times: 1500, url: ""},
       ]
     }
   }

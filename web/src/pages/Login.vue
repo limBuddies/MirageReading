@@ -2,16 +2,17 @@
   <div>
     <Navbar></Navbar>
     <b-container
-         style="display: flex; align-items: center; justify-content: center; height: calc(100vh - 80px)">
+        style="display: flex; align-items: center; justify-content: center; height: calc(100vh - 80px)">
       <b-img :src="adv"></b-img>
       <div id="wrapper">
         <h1 id="heading">登录</h1>
         <span id="subHeading">没有账号？前往<a href="/signup">注册</a></span>
         <div id="inputs">
           <b-input
-              placeholder="用户名"
-              id="username"
-              v-model="username"
+              placeholder="邮箱"
+              id="email"
+              type="email"
+              v-model="email"
           ></b-input>
           <b-input
               placeholder="密码"
@@ -20,12 +21,12 @@
               @keyup.enter="login()"
           ></b-input>
           <b-button id="login_button" variant="danger" @click="login()">
-            <strong v-if="username === '' || password === ''"
+            <strong v-if="email === '' || password === ''"
             >填写用户信息！</strong
             >
-            <strong v-else>以 {{ username }} 的身份登录</strong>
+            <strong v-else>以 {{ email }} 的身份登录</strong>
           </b-button>
-          <b-alert variant="secondary" id="alert" v-model="alert_show">{{ msg }}</b-alert>
+          <b-alert variant="secondary" id="alert" v-model="alert_show" style="text-align: center">{{ msg }}</b-alert>
         </div>
       </div>
       <div id="BackBar"/>
@@ -44,8 +45,9 @@ export default {
   },
   data() {
     return {
-      adv: "https://dummyimage.com/600x1.5:1",
-      username: "",
+      // adv: "https://dummyimage.com/600x1.5:1",
+      adv: common.kLogoDark,
+      email: "",
       password: "",
       msg: "",
       alert_show: false,
@@ -55,17 +57,16 @@ export default {
     login() {
       this.axios
           .post(common.Api("login"), {
-            data: {
-              username: this.username,
-              password: this.password
-            }
+            email: this.email,
+            password: this.password
           })
           .then((res) => {
             this.msg = res.data.status === "OK" ? "登录成功" : "登录失败";
+            if (res.data.status === "OK") setTimeout(() => this.$router.push('profile'), 1000);
             this.alert_show = true;
             if (res.data.status === "OK") {
-              sessionStorage.setItem("login_token", res.data.token);
-              sessionStorage.setItem("login_user", res.data.username);
+              localStorage.setItem("login_token", res.data.token);
+              localStorage.setItem("login_user", res.data.username);
               this.$router.push("/");
             }
           })
@@ -118,7 +119,7 @@ export default {
   text-align: center;
 }
 
-#username {
+#email {
   margin-bottom: 10px
 }
 </style>

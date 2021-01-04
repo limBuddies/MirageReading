@@ -16,7 +16,7 @@
         <div class="col-5" id="SubBanners">
           <b-row id="SearchBar" ref="SearchBar">
             <b-input type="text" class="col-10" id="SearchInput" placeholder="搜索" v-bind="message"/>
-            <b-icon-search class="col-2" id="SearchButton" @click="this.$router.push(message)"></b-icon-search>
+            <b-icon-search class="col-2" id="SearchButton" @click="$router.push('search')"></b-icon-search>
           </b-row>
           <b-row>
             <b-img

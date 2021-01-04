@@ -6,7 +6,6 @@
         <h2 class="col-6" id="Title">我的书架</h2>
         <b-form-select class="ml-auto" id="Selector" v-model="sortByVal" :options="sortBy"></b-form-select>
       </b-row>
-      >
       <ShelfBar></ShelfBar>
     </b-container>
   </div>
@@ -15,6 +14,7 @@
 <script>
 import Navbar from "../components/Navbar";
 import ShelfBar from "@/components/ShelfBar";
+import common from "@/common";
 
 export default {
   name: "Bookshelf",
@@ -31,6 +31,9 @@ export default {
   components: {
     Navbar,
     ShelfBar
+  },
+  mounted() {
+    common.checkToken(this, 'login');
   }
 }
 </script>

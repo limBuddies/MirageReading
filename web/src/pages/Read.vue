@@ -1,6 +1,9 @@
 <template>
   <div>
     <Navbar></Navbar>
+    <b-modal v-model="showHint" id="hint">
+      {{ hintText }}
+    </b-modal>
     <b-container>
       <b-row>
         <div class="col-2" id="Left" @click="prev()"/>
@@ -24,6 +27,7 @@
 <script>
 import Navbar from "@/components/Navbar";
 import Epub from "epubjs";
+import common from "@/common";
 
 export default {
   name: "Read",
@@ -32,6 +36,8 @@ export default {
     return {
       epub: undefined,
       rendition: undefined,
+      showHint: false,
+      hintText: ""
     }
   },
   methods: {
@@ -43,12 +49,22 @@ export default {
     },
   },
   mounted() {
-    this.epub = Epub("test.epub");
+    common.checkToken(this, 'login');
+    this.epub = Epub("ge.epub");
     const r = this.$refs.reader;
     this.rendition = this.epub.renderTo(r, {
       flow: "auto",
       width: r.clientWidth,
       height: r.clientHeight
+    });
+    this.rendition.hooks.content.register((content) => {
+      content.document.onmouseup = () => {
+        const sel = content.document.getSelection().toString();
+        if (sel.length > 0) {
+          this.showHint = true;
+          this.hintText = sel;
+        }
+      }
     });
     this.rendition.display();
 

@@ -16,7 +16,7 @@
                   <b-icon-star v-if="v===0"/>
                 </div>
               </b-row>
-              <b-img id="Borrow" src="https://dummyimage.com/210x7:2"/>
+              <b-img id="Borrow" src="https://dummyimage.com/210x7:2" @click="$router.push('read')"/>
               <small class="row" id="Buy" ref="Buy">或以 {{ price }} 购买</small>
             </div>
             <div class="col-1"/>
@@ -41,12 +41,11 @@ export default {
   name: "Detail",
   data() {
     return {
-      bookName: "阿甘正传",
-      subTitle: "子标题",
-      rating: 3.5,
+      bookName: "Great Expectations",
+      subTitle: "A study in human weakness and the slow human surrender.",
+      rating: 4.5,
       price: "￥15.00",
-      introduction: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介内容简介",
-      cover: "https://dummyimage.com/500x5:7"
+      introduction: "Great Expectations, by Charles Dickens, is part of the Barnes & Noble Classics series, which offers quality editions at affordable prices to the student and the general reader, including new scholarship, thoughtful design, and pages of carefully crafted extras.",      cover: "https://mirage-reading.oss-cn-guangzhou.aliyuncs.com/f3f49110eb0eb7c828d45104671f566f.webp"
     };
   },
   computed: {

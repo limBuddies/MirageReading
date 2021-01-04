@@ -1,25 +1,25 @@
 <template>
   <div>
     <Navbar></Navbar>
-    <div class="container" id="Social" ref="Social">
-      <div class="row">
+    <div class="container">
+      <div class="row" style="margin-top: 50px">
         <div class="col-md-8">
-          <h2 class="text-left">动弹</h2>
-          <small>热门话题</small>
-          <div>
-            <b-textarea
-              id="meSocial"
-              onkeyup="wordStatic(this);"
-              maxlength="160"
-              placeholder="写上一两句吧"
-              style="font-size: 10px; margin-top: 10px; width: 100%; height: 150px"
-            ></b-textarea>
-            <div class="textarea_counter">
-              <span id="num">0</span>/160
-              <b-button variant="secondary" @click="addComment()" style="margin-top: 10px"
-                >发布动弹</b-button
-              >
-            </div>
+          <div class="row" style="font-size: 30px">动弹</div>
+          <div class="row">热门话题: <a href="#" v-for="(topic,i) in hotTopics" :key="i"
+                                    style="margin-left: 10px">{{ topic }}</a></div>
+          <div class="row" style="margin-top: 10px">
+            <b-form-textarea
+                id="meSocial"
+                placeholder="在此处发表你的评论"
+                rows="8"
+                no-resize
+                v-model="message"
+                style="box-shadow: none; border: #666666 1px solid"
+            ></b-form-textarea>
+          </div>
+          <div class="row" style="align-items: center; margin-top: 20px">
+            {{ message.length }}/160
+            <b-button variant="secondary" @click="addComment()" style="margin-left: 10px">发布动弹</b-button>
           </div>
         </div>
         <div class="col-md-4">
@@ -30,87 +30,14 @@
           </b-carousel>
         </div>
       </div>
-      <div class="row">
+      <hr>
+      <div class="row" style="margin-top: 50px">
         <div class="col-md-8">
-          <div class="username" v-for="(r, i) in username" :key="i">
-            <div>
-              <b-img
-                fluid
-                :src="img"
-                style="
-                  width: 40px;
-                  height: 40px;
-                  border-radius: 100%;
-                  margin: 5px 10px 20px 0px;
-                "
-              ></b-img>
-
-              <strong id="username" style="display: inline-block">
-                {{ r }}
-                <br />
-                <small>18分钟前 iphone</small>
-              </strong>
-            </div>
-            <div id="user_content">
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong><br /><br />
-            </div>
-            <div class="icon">
-              <b-icon icon="box-arrow-up-right"></b-icon>转发
-              <b-icon icon="hand-thumbs-up"></b-icon>赞
-              <b-icon icon="chat-left-dots"></b-icon>评论
-              <small v-href="">查看详情</small>
-              <hr />
-            </div>
-          </div>
+          <Tweet></Tweet>
         </div>
         <div class="col-md-4">
           <h3>热门动弹</h3>
-          <div class="user-hotSocial-item" v-for="(c, ci) in hotusers" :key="ci">
-            <div>
-              <b-img
-                fluid
-                :src="img"
-                style="
-                  width: 40px;
-                  height: 40px;
-                  border-radius: 100%;
-                  margin: 5px 10px 20px 0px;
-                "
-              ></b-img>
-              <strong id="username" style="display: inline-block">
-                {{ c }}
-                <br />
-                <small>18分钟前 iphone</small>
-              </strong>
-            </div>
-            <div id="user_content">
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong>
-              <strong>文字内容</strong> <strong>文字内容</strong><br /><br />
-            </div>
-            <div class="icon">
-              <b-icon icon="box-arrow-up-right"></b-icon>转发
-              <b-icon icon="hand-thumbs-up"></b-icon>赞
-              <b-icon icon="chat-left-dots"></b-icon>评论
-              <small v-href="">查看详情</small>
-              <small style="float: right">举报</small>
-              <b-icon icon="exclamation-circle-fill" style="float: right"></b-icon>
-
-              <hr />
-            </div>
-          </div>
+          <Tweet></Tweet>
         </div>
       </div>
     </div>
@@ -119,31 +46,35 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import Tweet from "../components/Tweet"
+import common from "@/common";
 
 export default {
   name: "Tweets",
+  components: {Navbar, Tweet},
   data() {
     return {
-      username: ["usename1", "username2", "username3", "username4"],
-      hotusers: ["usename1", "username2"],
-      img:
-        "https://lh3.googleusercontent.com/proxy/Fzi0EuM9Q1TOOOnNrQMPod_Yd00WNB9CZY7sYxOdbiAp6Lk-41es6RPvB1RB41bg-CDK6jEIuHsJErAjPu4bEXjdPMt01sCI2ncgQuy_YWoB3RtpovMAoF_rpnLuUW78yQOJPF4kTr8",
+      message: "",
       sub_banners1: [
-        { url: "xxx", img: "https://dummyimage.com/640x640" },
-        { url: "xxx", img: "https://dummyimage.com/640x640" },
+        {url: "", img: "https://dummyimage.com/640x640"},
+        {url: "", img: "https://dummyimage.com/640x640"},
       ],
+      hotTopics: ['#每日打卡#', '#今日歌曲推荐#', '#求职招聘#'],
     };
   },
-
-  components: { Navbar },
+  methods: {
+    addComment: function () {
+      common.checkToken(this, 'login');
+      this.axios
+          .post(common.Api('addTweet'), {
+            token: localStorage.getItem('login_token'),
+            content: this.message
+          }).then(() => this.$router.go(0)).catch((err) => console.log(err));
+    }
+  }
 };
 </script>
 
 <style scoped>
-.textarea_counter {
-  float: right;
-}
-.row {
-  margin-top: 60px;
-}
+
 </style>
